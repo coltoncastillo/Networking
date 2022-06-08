@@ -69,24 +69,68 @@ FTP (TCP 20/21)
       - Complications with tunneling through SSH
       - Passive FTP solves issues related to Active mode and is most often used in modern systems
     - Passive 
+
 SSH (TCP 22)
 - Messages provide:
   - Client/server authentication
   - Asymmetric or PKI for key exchange
   - Symmetric for session
   - User Authentication
-  - Data Stream Channeling 
+  - Data Stream Channeling
+
+Telnet (TCP 13)
+ 
+SMTP (TCP 25)
+ 
+TACACS (TCP 49)
   
+HTTP(S) (TCP 80/443)
+ 
+POP (TCP 110)
+ 
+IMAP (TCP 143)
+ 
+RDP (TCP 3389)
+  
+Ok im tired of typing down all these services and their ports 😈
+  
+`tcpdump i eth0 -XX`
+
+`tcpdump i eth0 -XXvv`
+
+`sudo tcpdump -r practice.pcap`
+
+`sudo tcpdump -r practice.pcap port 80 -XXvv`
+
+`sudo tcpdump "ether[12:2] = 0x800" -d` somethin to do with berkeley packet filters
 
 
+### Berkeley packet filters
+Using BPFs with operators, bitmasking, and TCPDump creates a powerful tool for traffic filtering and parsing.
+```
+tcpdump {A} [B:C] {D} {E} {F} {G}
+
+A = Protocol (ether | arp | ip | ip6 | icmp | tcp | udp)
+B = Header Byte offset
+C = optional: Byte Length. Can be 1, 2 or 4 (default 1)
+D = optional: Bitwise mask (&)
+E = Operator (= | == | > | < | <= | >= | != | () | << | >>)
+F = Result of Expresion
+G = optional: Logical Operator (&& ||) to bridge expressions
+```
+Example: `tcpdump 'ether[12:2] = 0x0800 && (tcp[2:2] != 22 && tcp[2:2] != 23)'`
+
+***BITWISE MASKING***
+: To filter down to the bit(s) and not just the byte.
+
+`ip[0] & 0x0F > 0x05`
 
 
+`sudo tcpdump "tcp[13] & 0x01 = 0x01"` 13th byte, bit 1 (bits go from right to left btw)
 
 
+# Sad Chinese Kid??!
 
-
-
-
-
+<img src="https://image.shutterstock.com/image-photo/sad-expression-asian-boy-crying-260nw-1027043095.jpg" alt="drawing" width="500"/>
 
 
